@@ -1,4 +1,5 @@
 import 'package:emobook/models/emo_theme.dart';
+import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:emobook/widgets/entries_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +18,9 @@ class EmoApp extends StatelessWidget {
         theme: ThemeData(
           colorScheme: theme.colorScheme,
         ),
-        home: const EntriesListPage(),
+        home: EntriesListPage(
+          repository: DayEntriesRepository(),
+        ),
       ),
     );
   }

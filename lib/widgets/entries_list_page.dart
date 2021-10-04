@@ -1,5 +1,6 @@
 import 'package:emobook/models/day_entry.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
+import 'package:emobook/widgets/day_entry_list_item.dart';
 import 'package:emobook/widgets/snapshot_based_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,7 @@ class EntriesListPage extends StatefulWidget {
 typedef _PageDataType = Iterable<DayEntry>;
 
 class _EntriesListPageState extends State<EntriesListPage> {
-  var _snapshot = AsyncSnapshot<_PageDataType>.waiting();
+  var _snapshot = const AsyncSnapshot<_PageDataType>.waiting();
 
   @override
   void initState() {
@@ -25,15 +26,20 @@ class _EntriesListPageState extends State<EntriesListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SnapshotBasedScreen(snapshot: _snapshot, buildChild: buildChild)
+    return SnapshotBasedScreen(snapshot: _snapshot, buildChild: _buildList);
   }
 
   Widget _buildList(BuildContext context, _PageDataType data) {
-    return ListView(
-      children: [
-        for (final entry in data)
-      ],
-    )
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Entries'),
+      ),
+      body: ListView(
+        children: [
+          for (final entry in data) DayEntryListItem(dayEntry: entry),
+        ],
+      ),
+    );
   }
 
   void _setSnapshot(AsyncSnapshot<_PageDataType> snapshot) {
