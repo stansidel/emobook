@@ -1,1 +1,4 @@
-{}
+{
+  "snapshotBasedScreen_errorScreen_title": "Error occurred",
+  "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Try again"
+}
