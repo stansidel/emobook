@@ -8,5 +8,15 @@
   "emoMoodSelectorWidget_moodName_neutral": "Норм",
   "emoMoodSelectorWidget_moodName_sad": "Плохо",
   "emoMoodSelectorWidget_moodName_verySad": "Ужасно",
-  "emotion_name_grateful": "благодарность"
+  "emotion_name_grateful": "благодарность",
+  "entriesListPage_title": "Записи",
+  "dayEntryEditPage_title": "Изменить запись",
+  "dayEntryEditPage_list_date_label": "Дата: {formattedDate}",
+  "dayEntryEditPage_list_myEmotions_label": "Мои эмоции",
+  "dayEntryEditPage_list_comment_hintText": "Комментарий",
+  "dayEntryEditPage_list_imageButtons_fromGallery": "Добавить картинку",
+  "dayEntryEditPage_list_imageButtons_camera": "Сделать фото",
+  "dayEntryEditPage_list_imageButtons_doodle": "Нарисовать",
+  "general_error_unexpected": "Непредвиденная ошибка",
+  "emotionsSelectorField_nothingSelected": "Без эмоций"
 }

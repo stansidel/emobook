@@ -11,8 +11,11 @@ import 'package:emobook/widgets/select_emotions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 
 import 'day_entry_edit_page_options.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DayEntryEditPage extends StatefulWidget {
   static const routeName = '/day_entry/edit';
@@ -52,7 +55,7 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit entry'),
+        title: Text(AppLocalizations.of(context)!.dayEntryEditPage_title),
       ),
       body: _buildBody(context),
       bottomNavigationBar: BottomAppBar(
@@ -68,7 +71,10 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView(children: [
-        Text('My emotions'),
+        _buildDateField(context),
+        const SizedBox(height: 8.0),
+        Text(AppLocalizations.of(context)!
+            .dayEntryEditPage_list_myEmotions_label),
         const SizedBox(height: 8.0),
         EmotionsSelectorField(
           emotions: viewModel.emotions ?? [],
@@ -84,11 +90,24 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
     );
   }
 
+  Widget _buildDateField(BuildContext context) {
+    final locale = Localizations.localeOf(context).languageCode;
+    final formattedDate =
+        DateFormat.yMd(locale).add_jm().format(viewModel.date);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Text(AppLocalizations.of(context)!
+          .dayEntryEditPage_list_date_label(formattedDate)),
+    );
+  }
+
   Widget _buildCommentField() {
     return Focus(
       child: TextField(
         controller: _commentController,
-        decoration: InputDecoration(hintText: 'Comment'),
+        decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!
+                .dayEntryEditPage_list_comment_hintText),
       ),
       onFocusChange: (gotFocus) {
         if (!gotFocus) {
@@ -116,11 +135,13 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
     return Row(
       children: [
         TextButton(
-          child: Text('Add from Gallery'),
+          child: Text(AppLocalizations.of(context)!
+              .dayEntryEditPage_list_imageButtons_fromGallery),
           onPressed: () => _addImage(ImageSource.gallery),
         ),
         TextButton(
-          child: Text('Take photo'),
+          child: Text(AppLocalizations.of(context)!
+              .dayEntryEditPage_list_imageButtons_camera),
           onPressed: () => _addImage(ImageSource.camera),
         ),
       ],
@@ -140,7 +161,9 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
       });
     } catch (e) {
       log('Unexpected error while saving file: $e');
-      const snackBar = SnackBar(content: Text('Unexpected error'));
+      var snackBar = SnackBar(
+          content:
+              Text(AppLocalizations.of(context)!.general_error_unexpected));
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
   }

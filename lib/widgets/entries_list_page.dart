@@ -15,6 +15,8 @@ import 'package:intl/intl.dart';
 import 'day_entry_edit_page_options.dart';
 import 'package:emobook/extensions/date.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class EntriesListPage extends StatefulWidget {
   const EntriesListPage({Key? key, required this.repository}) : super(key: key);
 
@@ -43,7 +45,7 @@ class _EntriesListPageState extends State<EntriesListPage> {
   Widget _buildList(BuildContext context, _PageDataType data) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Entries'),
+        title: Text(AppLocalizations.of(context)!.entriesListPage_title),
       ),
       body: ListView(
         children: _buildListItems(data).toList(growable: false),
@@ -72,28 +74,28 @@ class _EntriesListPageState extends State<EntriesListPage> {
   }
 
   Widget _buildListItem(DayEntry entry) {
-    return GestureDetector(
-      child: Dismissible(
-        key: Key(entry.id ?? ''),
-        child: DayEntryListItem(dayEntry: entry),
-        onDismissed: (direction) {
-          if (direction != DismissDirection.endToStart) {
-            return;
-          }
-          _deleteEntry(entry);
-        },
-        direction: DismissDirection.endToStart,
-        background: Container(
-          color: EmoTheme.of(context).errorColor,
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(right: 16.0),
-          child: Icon(
-            Icons.delete,
-            color: EmoTheme.of(context).onErrorColor,
-          ),
+    return Dismissible(
+      key: Key(entry.id ?? ''),
+      child: DayEntryListItem(
+          dayEntry: entry,
+          onTap: () => _navToEditEntry(entry: entry),
+      ),
+      onDismissed: (direction) {
+        if (direction != DismissDirection.endToStart) {
+          return;
+        }
+        _deleteEntry(entry);
+      },
+      direction: DismissDirection.endToStart,
+      background: Container(
+        color: EmoTheme.of(context).errorColor,
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: 16.0),
+        child: Icon(
+          Icons.delete,
+          color: EmoTheme.of(context).onErrorColor,
         ),
       ),
-      onTap: () => _navToEditEntry(entry: entry),
     );
   }
 

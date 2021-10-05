@@ -9,13 +9,16 @@ import 'package:emobook/extensions/exists.dart';
 import 'package:intl/intl.dart';
 
 class DayEntryListItem extends StatelessWidget {
-  const DayEntryListItem({Key? key, required this.dayEntry}) : super(key: key);
+  const DayEntryListItem({Key? key, required this.dayEntry, this.onTap})
+      : super(key: key);
 
   final DayEntry dayEntry;
 
   String get _comment => dayEntry.comment ?? '';
 
   EmoFile? get _image => dayEntry.images?.firstOrNull;
+
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +41,7 @@ class DayEntryListItem extends StatelessWidget {
         ],
       ),
       trailing: _image.exists((i) => EmoImageView(image: i)),
+      onTap: onTap,
     );
   }
 }

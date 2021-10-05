@@ -3,6 +3,8 @@ import 'package:emobook/models/emotion.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class EmotionsSelectorField extends StatelessWidget {
   final List<Emotion> emotions;
   final Color borderColor;
@@ -47,7 +49,7 @@ class EmotionsSelectorField extends StatelessWidget {
 
 String _getText(BuildContext context, List<Emotion>? emotions) {
   if (emotions == null || emotions.isEmpty) {
-    return 'Nothing';
+    return AppLocalizations.of(context)!.emotionsSelectorField_nothingSelected;
   }
   final text = emotions.map((e) => e.localized(context)).join(', ');
   return text.toUpperCaseFirst();

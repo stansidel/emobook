@@ -8,5 +8,23 @@
   "emoMoodSelectorWidget_moodName_neutral": "Ok",
   "emoMoodSelectorWidget_moodName_sad": "Sad",
   "emoMoodSelectorWidget_moodName_verySad": "Very sad",
-  "emotion_name_grateful": "grateful"
+  "emotion_name_grateful": "grateful",
+  "entriesListPage_title": "Entries",
+  "dayEntryEditPage_title": "Edit entry",
+  "dayEntryEditPage_list_date_label": "Date: {formattedDate}",
+  "@dayEntryEditPage_list_date_label": {
+    "placeholders": {
+      "formattedDate": {
+        "type": "String",
+        "example": "01/01/2022 10:17 AM"
+      }
+    }
+  },
+  "dayEntryEditPage_list_myEmotions_label": "My emotions",
+  "dayEntryEditPage_list_comment_hintText": "Comment",
+  "dayEntryEditPage_list_imageButtons_fromGallery": "Add from Gallery",
+  "dayEntryEditPage_list_imageButtons_camera": "Take photo",
+  "dayEntryEditPage_list_imageButtons_doodle": "Draw",
+  "general_error_unexpected": "Unexpected error",
+  "emotionsSelectorField_nothingSelected": "Nothing"
 }
