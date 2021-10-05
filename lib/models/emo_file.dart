@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'emo_file.freezed.dart';
+part 'emo_file.g.dart';
 
 enum EmoFileStorage {
   localFile
@@ -14,4 +15,6 @@ class EmoFile with _$EmoFile {
   }) = _EmoFile;
 
   const EmoFile._();
+
+  factory EmoFile.fromJson(Map<String, dynamic> json) => _$EmoFileFromJson(json);
 }

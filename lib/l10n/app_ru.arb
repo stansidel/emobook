@@ -1,4 +1,6 @@
 {
   "snapshotBasedScreen_errorScreen_title": "Возникла ошибка",
-  "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Повторить попытку"
+  "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Повторить попытку",
+  "emoMoodSelectorWidget_hint_new": "Нажмите дважды, чтобы добавить запись",
+  "emoMoodSelectorWidget_hint_change": "Нажмите дважды, чтобы изменить настроение"
 }

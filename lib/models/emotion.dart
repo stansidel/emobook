@@ -4,14 +4,16 @@ enum Emotion {
   grateful,
 }
 
-extension EmotionLocalization on Iterable<Emotion> {
-  Iterable<String> localized(BuildContext context) {
-    return map((e) => _localizedEmotion(e, context));
+extension EmotionLocalization on Emotion {
+  String localized(BuildContext context) {
+    switch (this) {
+      case Emotion.grateful: return 'grateful';
+    }
   }
 }
 
-String _localizedEmotion(Emotion emotion, BuildContext context) {
-  switch (emotion) {
-    case Emotion.grateful: return 'Grateful';
+extension EmotionsListLocalization on Iterable<Emotion> {
+  Iterable<String> localized(BuildContext context) {
+    return map((e) => e.localized(context));
   }
 }

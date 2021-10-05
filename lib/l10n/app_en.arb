@@ -1,4 +1,6 @@
 {
   "snapshotBasedScreen_errorScreen_title": "Error occurred",
-  "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Try again"
+  "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Try again",
+  "emoMoodSelectorWidget_hint_new": "Double tap to track your mood",
+  "emoMoodSelectorWidget_hint_change": "Double tap to change your mood"
 }
