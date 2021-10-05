@@ -47,9 +47,18 @@ class EmoMoodSelectorWidget extends StatelessWidget {
   Widget _buildMoodWidget(BuildContext context, Mood mood) {
     const size = 50.0;
     final isGrayscale = currentMood != null && currentMood != mood;
-    return InkWell(
-      onDoubleTap: () => onTap?.call(mood: mood),
-      child: MoodWidget(mood: mood, width: size, greyscale: isGrayscale),
+    return Column(
+      children: [
+        Text(
+          _localizedMood(mood, context),
+          style: Theme.of(context).textTheme.caption?.copyWith(fontSize: 10.0),
+        ),
+        const SizedBox(height: 4.0),
+        GestureDetector(
+          onDoubleTap: () => onTap?.call(mood: mood),
+          child: MoodWidget(mood: mood, width: size, greyscale: isGrayscale),
+        ),
+      ],
     );
   }
 }
@@ -61,3 +70,21 @@ const Iterable<Mood> _moods = [
   Mood.happy,
   Mood.veryHappy,
 ];
+
+String _localizedMood(Mood mood, BuildContext context) {
+  switch (mood) {
+    case Mood.veryHappy:
+      return AppLocalizations.of(context)!
+          .emoMoodSelectorWidget_moodName_veryHappy;
+    case Mood.happy:
+      return AppLocalizations.of(context)!.emoMoodSelectorWidget_moodName_happy;
+    case Mood.neutral:
+      return AppLocalizations.of(context)!
+          .emoMoodSelectorWidget_moodName_neutral;
+    case Mood.sad:
+      return AppLocalizations.of(context)!.emoMoodSelectorWidget_moodName_sad;
+    case Mood.verySad:
+      return AppLocalizations.of(context)!
+          .emoMoodSelectorWidget_moodName_verySad;
+  }
+}

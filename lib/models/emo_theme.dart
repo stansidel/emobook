@@ -19,6 +19,7 @@ class _EmoThemeWidget extends InheritedWidget {
 @freezed
 class EmoTheme with _$EmoTheme {
   const factory EmoTheme({
+    required Color listHeaderBgColor,
     required Color primaryColor,
     required Color primaryVariantColor,
     required Color secondaryColor,
@@ -34,10 +35,12 @@ class EmoTheme with _$EmoTheme {
     required Brightness brightness,
   }) = _EmoTheme;
 
-  factory EmoTheme.fromPrimaryColor({required Color primaryColor}) {
+  factory EmoTheme.fromPrimaryColor(
+      {required Color primaryColor, required Color listHeaderBgColor}) {
     final scheme =
         ColorScheme.fromSwatch(primarySwatch: primaryColor.materialColor);
     return EmoTheme(
+      listHeaderBgColor: listHeaderBgColor,
       primaryColor: primaryColor,
       primaryVariantColor: scheme.primaryVariant,
       secondaryColor: scheme.secondary,
@@ -56,8 +59,9 @@ class EmoTheme with _$EmoTheme {
 
   const EmoTheme._();
 
-  static EmoTheme get defaultTheme =>
-      EmoTheme.fromPrimaryColor(primaryColor: Colors.lightBlue);
+  static EmoTheme get defaultTheme => EmoTheme.fromPrimaryColor(
+      primaryColor: Colors.lightBlue,
+      listHeaderBgColor: const Color(0xFFEDECEC));
 
   Widget widget({required Widget child}) {
     return _EmoThemeWidget(child: child, theme: this);

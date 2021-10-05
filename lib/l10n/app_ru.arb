@@ -1,6 +1,11 @@
 {
   "snapshotBasedScreen_errorScreen_title": "Возникла ошибка",
   "snapshotBasedScreen_errorScreen_tryAgainButton_title": "Повторить попытку",
-  "emoMoodSelectorWidget_hint_new": "Нажмите дважды, чтобы добавить запись",
-  "emoMoodSelectorWidget_hint_change": "Нажмите дважды, чтобы изменить настроение"
+  "emoMoodSelectorWidget_hint_new": "Нажмите дважды, чтобы записать настроение",
+  "emoMoodSelectorWidget_hint_change": "Нажмите дважды, чтобы изменить настроение",
+  "emoMoodSelectorWidget_moodName_veryHappy": "Круто",
+  "emoMoodSelectorWidget_moodName_happy": "Хорошо",
+  "emoMoodSelectorWidget_moodName_neutral": "Норм",
+  "emoMoodSelectorWidget_moodName_sad": "Плохо",
+  "emoMoodSelectorWidget_moodName_verySad": "Ужасно"
 }

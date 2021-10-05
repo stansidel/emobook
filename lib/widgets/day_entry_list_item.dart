@@ -6,6 +6,7 @@ import 'package:emobook/widgets/mood_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 import 'package:emobook/extensions/exists.dart';
+import 'package:intl/intl.dart';
 
 class DayEntryListItem extends StatelessWidget {
   const DayEntryListItem({Key? key, required this.dayEntry}) : super(key: key);
@@ -22,8 +23,9 @@ class DayEntryListItem extends StatelessWidget {
     return ListTile(
       leading: MoodWidget(mood: dayEntry.mood),
       title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(dayEntry.date.toIso8601String()),
+          Text(_localizedDate(dayEntry.date, context)),
           if (_comment.isNotEmpty)
             Text(
               _comment,
@@ -38,4 +40,10 @@ class DayEntryListItem extends StatelessWidget {
       trailing: _image.exists((i) => EmoImageView(image: i)),
     );
   }
+}
+
+String _localizedDate(DateTime date, BuildContext context) {
+  return DateFormat.yMd(Localizations.localeOf(context).languageCode)
+      .add_jm()
+      .format(date.toLocal());
 }

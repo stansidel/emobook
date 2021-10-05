@@ -5,12 +5,15 @@ import 'package:emobook/models/mood.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:emobook/widgets/day_entry_edit_page.dart';
 import 'package:emobook/widgets/day_entry_list_item.dart';
+import 'package:emobook/widgets/emo_list_header.dart';
 import 'package:emobook/widgets/emo_mood_selector_widget.dart';
 import 'package:emobook/widgets/snapshot_based_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import 'day_entry_edit_page_options.dart';
+import 'package:emobook/extensions/date.dart';
 
 class EntriesListPage extends StatefulWidget {
   const EntriesListPage({Key? key, required this.repository}) : super(key: key);
@@ -43,9 +46,7 @@ class _EntriesListPageState extends State<EntriesListPage> {
         title: const Text('Entries'),
       ),
       body: ListView(
-        children: [
-          for (final entry in data) _buildListItem(entry),
-        ],
+        children: _buildListItems(data).toList(growable: false),
       ),
       bottomNavigationBar: BottomAppBar(
         child: EmoMoodSelectorWidget(
@@ -53,6 +54,21 @@ class _EntriesListPageState extends State<EntriesListPage> {
         ),
       ),
     );
+  }
+
+  Iterable<Widget> _buildListItems(Iterable<DayEntry> entries) sync* {
+    DateTime? previousDay;
+    for (final entry in entries) {
+      final entryDate = entry.date.toLocal();
+      if (previousDay?.isSameDate(entryDate) != true) {
+        yield EmoListHeader.themeDefault(
+            theme: EmoTheme.of(context),
+            title: DateFormat.yMd(Localizations.localeOf(context).languageCode)
+                .format(entryDate));
+        previousDay = entryDate;
+      }
+      yield _buildListItem(entry);
+    }
   }
 
   Widget _buildListItem(DayEntry entry) {
