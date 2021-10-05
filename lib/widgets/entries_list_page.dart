@@ -86,14 +86,15 @@ class _EntriesListPageState extends State<EntriesListPage> {
         }
         _deleteEntry(entry);
       },
+      confirmDismiss: (direction) => _confirmDismiss(direction, context),
       direction: DismissDirection.endToStart,
       background: Container(
-        color: EmoTheme.of(context).errorColor,
+        color: EmoTheme.of(context).dismissDeleteBgColor,
         alignment: Alignment.centerRight,
         padding: const EdgeInsets.only(right: 16.0),
         child: Icon(
           Icons.delete,
-          color: EmoTheme.of(context).onErrorColor,
+          color: EmoTheme.of(context).dismissDeleteFgColor,
         ),
       ),
     );
@@ -103,6 +104,29 @@ class _EntriesListPageState extends State<EntriesListPage> {
     setState(() {
       _snapshot = snapshot;
     });
+  }
+
+  Future<bool> _confirmDismiss(DismissDirection direction, BuildContext context) async {
+    final result = await showDialog(context: context, builder: (context) {
+      return AlertDialog(
+        title: Text(AppLocalizations.of(context)!
+            .entriesListPage_deleteEntry_dialog_title),
+        content: Text(AppLocalizations.of(context)!
+            .entriesListPage_deleteEntry_dialog_content),
+        actions: [
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.general_button_yes),
+            onPressed: () => Navigator.of(context).pop(true),
+          ),
+          TextButton(
+            child: Text(AppLocalizations.of(context)!.general_button_no),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+        ],
+      );
+    });
+
+    return result ?? false;
   }
 
   Future<void> _navToNewEntry({required Mood mood}) async {

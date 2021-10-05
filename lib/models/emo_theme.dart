@@ -20,6 +20,8 @@ class _EmoThemeWidget extends InheritedWidget {
 class EmoTheme with _$EmoTheme {
   const factory EmoTheme({
     required Color listHeaderBgColor,
+    required Color dismissDeleteBgColor,
+    required Color dismissDeleteFgColor,
     required Color primaryColor,
     required Color primaryVariantColor,
     required Color secondaryColor,
@@ -35,12 +37,18 @@ class EmoTheme with _$EmoTheme {
     required Brightness brightness,
   }) = _EmoTheme;
 
-  factory EmoTheme.fromPrimaryColor(
-      {required Color primaryColor, required Color listHeaderBgColor}) {
+  factory EmoTheme.fromPrimaryColor({
+    required Color primaryColor,
+    required Color listHeaderBgColor,
+    Color? dismissDeleteBgColor,
+    Color? dismissDeleteFgColor,
+  }) {
     final scheme =
         ColorScheme.fromSwatch(primarySwatch: primaryColor.materialColor);
     return EmoTheme(
       listHeaderBgColor: listHeaderBgColor,
+      dismissDeleteBgColor: dismissDeleteBgColor ?? scheme.error,
+      dismissDeleteFgColor: dismissDeleteFgColor ?? scheme.onError,
       primaryColor: primaryColor,
       primaryVariantColor: scheme.primaryVariant,
       secondaryColor: scheme.secondary,

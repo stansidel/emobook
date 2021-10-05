@@ -19,5 +19,12 @@
   "dayEntryEditPage_list_imageButtons_doodle": "Нарисовать",
   "general_error_unexpected": "Непредвиденная ошибка",
   "emotionsSelectorField_nothingSelected": "Без эмоций",
-  "selectEmotionsPage_title": "Эмоции"
+  "selectEmotionsPage_title": "Эмоции",
+  "drawingPage_title": "Зарисовка",
+  "dayEntryEditPage_deleteImage_dialog_title": "Удалить?",
+  "dayEntryEditPage_deleteImage_dialog_content": "Восстановить изображения будет невозможно",
+  "general_button_yes": "Да",
+  "general_button_no": "Нет",
+  "entriesListPage_deleteEntry_dialog_title": "Удалить?",
+  "entriesListPage_deleteEntry_dialog_content": "Восстановить запись будет невозможно."
 }

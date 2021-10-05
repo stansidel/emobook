@@ -1,6 +1,7 @@
 import 'package:emobook/models/emo_theme.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:emobook/widgets/day_entry_edit_page.dart';
+import 'package:emobook/widgets/drawing/drawing_page.dart';
 import 'package:emobook/widgets/entries_list_page.dart';
 import 'package:emobook/widgets/select_emotions_page.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +37,7 @@ class _EmoAppState extends State<EmoApp> {
                 repository: _dayEntriesRepository, options: _getArg(settings)),
             SelectEmotionsPage.routeName: (context) =>
                 SelectEmotionsPage(selectedEmotions: _getArg(settings)),
+            DrawingPage.routeName: (context) => const DrawingPage(),
           };
           WidgetBuilder builder = routes[settings.name]!;
           return MaterialPageRoute(builder: (ctx) => builder(ctx));

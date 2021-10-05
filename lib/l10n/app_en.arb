@@ -27,5 +27,12 @@
   "dayEntryEditPage_list_imageButtons_doodle": "Draw",
   "general_error_unexpected": "Unexpected error",
   "emotionsSelectorField_nothingSelected": "Nothing",
-  "selectEmotionsPage_title": "Select emotions"
+  "selectEmotionsPage_title": "Select emotions",
+  "drawingPage_title": "Drawing",
+  "dayEntryEditPage_deleteImage_dialog_title": "Delete?",
+  "dayEntryEditPage_deleteImage_dialog_content": "This action is irreversible.",
+  "general_button_yes": "Yes",
+  "general_button_no": "No",
+  "entriesListPage_deleteEntry_dialog_title": "Delete?",
+  "entriesListPage_deleteEntry_dialog_content": "This action is irreversible."
 }

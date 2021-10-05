@@ -7,6 +7,7 @@ import 'package:nanoid/async.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
+import 'dart:typed_data';
 
 class IdNotSetException implements Exception {}
 class SourceFileMissingException implements Exception {}
@@ -59,6 +60,25 @@ class DayEntriesRepository {
     await dir.delete(recursive: true);
   }
 
+  Future<DayEntry> addImageFromBytes({required DayEntry entry, required Uint8List bytes, required String extension}) async {
+    final id = entry.id;
+    if (id == null) {
+      throw IdNotSetException();
+    }
+    final entryDirPath = await _dirPathForId(id);
+    final String newId = await _generateId(DateTime.now());
+    final targetPath = p.join(entryDirPath, '$newId.$extension');
+    final targetFile = File(targetPath);
+
+    targetFile.writeAsBytes(bytes);
+
+    var images = entry.images ?? [];
+    images.add(EmoFile(path: targetPath, storage: EmoFileStorage.localFile));
+    final newEntry = entry.copyWith(images: images);
+    await updateOrSaveEntry(newEntry);
+    return newEntry;
+  }
+
   Future<DayEntry> addImage({required DayEntry entry, required String imagePath}) async {
     final id = entry.id;
     if (id == null) {
@@ -74,7 +94,7 @@ class DayEntriesRepository {
     var targetFile = File(targetPath);
     final targetExists = await targetFile.exists();
     if (targetExists) {
-      final newId = _generateId(DateTime.now());
+      final String newId = await _generateId(DateTime.now());
       targetPath = p.join(entryDirPath, '$newId.${p.extension(imagePath)}');
       targetFile = File(targetPath);
     }
@@ -84,6 +104,35 @@ class DayEntriesRepository {
     final newEntry = entry.copyWith(images: images);
     await updateOrSaveEntry(newEntry);
     return newEntry;
+  }
+
+  Future<DayEntry> removeImage({required DayEntry entry, required EmoFile image}) async {
+    var images = entry.images;
+    if (images == null) {
+      return entry;
+    }
+    if (!images.contains(image)) {
+      return entry;
+    }
+    images.remove(image);
+    final updatedEntry = entry.copyWith(images: images);
+    if (image.storage != EmoFileStorage.localFile) {
+      updateOrSaveEntry(updatedEntry);
+      return updatedEntry;
+    }
+    try {
+      final file = File(image.path);
+      final exists = await file.exists();
+      if (!exists) {
+        updateOrSaveEntry(updatedEntry);
+        return updatedEntry;
+      }
+      await file.delete(recursive: false);
+    } catch (e) {
+      log('Got an error deleting image: $e');
+    }
+    updateOrSaveEntry(updatedEntry);
+    return updatedEntry;
   }
 
   Future<DayEntry> _readEntry(String id) async {

@@ -50,6 +50,7 @@ dependencies:
   nanoid:
   path_provider:
   path:
+  image_gallery_saver:
 
 dev_dependencies:
   flutter_test:
