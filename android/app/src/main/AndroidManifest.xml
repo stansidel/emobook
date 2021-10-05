@@ -2,6 +2,7 @@
     package="family.sidel.emobook">
    <application
         android:label="emobook"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

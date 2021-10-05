@@ -45,6 +45,7 @@ dependencies:
   http:
 
   permission_handler:
+  image_picker:
 #  flutter_svg:
   nanoid:
   path_provider:

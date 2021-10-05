@@ -2,10 +2,14 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:emobook/models/day_entry.dart';
+import 'package:emobook/models/emo_file.dart';
 import 'package:nanoid/async.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 import 'dart:io';
+
+class IdNotSetException implements Exception {}
+class SourceFileMissingException implements Exception {}
 
 class DayEntriesRepository {
   static const storageDirectory = 'entries';
@@ -36,8 +40,8 @@ class DayEntriesRepository {
     return result;
   }
 
-  Future<String> updateOrSaveEntry(String? id, DayEntry entry) async {
-    final effectiveId = id ?? await _generateId(entry);
+  Future<String> updateOrSaveEntry(DayEntry entry) async {
+    final effectiveId = entry.id ?? await _generateId(entry.date);
     final dataFilePath = await _fileObjectPathForId(effectiveId);
     final dataObject = entry.copyWith(id: effectiveId).toJson();
     final dataString = jsonEncode(dataObject);
@@ -53,6 +57,33 @@ class DayEntriesRepository {
       return;
     }
     await dir.delete(recursive: true);
+  }
+
+  Future<DayEntry> addImage({required DayEntry entry, required String imagePath}) async {
+    final id = entry.id;
+    if (id == null) {
+      throw IdNotSetException();
+    }
+    final sourceFile = File(imagePath);
+    final exists = await sourceFile.exists();
+    if (!exists) {
+      throw SourceFileMissingException();
+    }
+    final entryDirPath = await _dirPathForId(id);
+    var targetPath = p.join(entryDirPath, p.basename(imagePath));
+    var targetFile = File(targetPath);
+    final targetExists = await targetFile.exists();
+    if (targetExists) {
+      final newId = _generateId(DateTime.now());
+      targetPath = p.join(entryDirPath, '$newId.${p.extension(imagePath)}');
+      targetFile = File(targetPath);
+    }
+    await sourceFile.copy(targetPath);
+    var images = entry.images ?? [];
+    images.add(EmoFile(path: targetPath, storage: EmoFileStorage.localFile));
+    final newEntry = entry.copyWith(images: images);
+    await updateOrSaveEntry(newEntry);
+    return newEntry;
   }
 
   Future<DayEntry> _readEntry(String id) async {
@@ -85,13 +116,13 @@ class DayEntriesRepository {
         .create(recursive: true);
   }
 
-  Future<String> _generateId(DayEntry entry) async {
-    final year = entry.date.year.toString();
-    final month = entry.date.month.toString().padLeft(2, '0');
-    final day = entry.date.day.toString().padLeft(2, '0');
-    final hour = entry.date.hour.toString().padLeft(2, '0');
-    final minute = entry.date.minute.toString().padLeft(2, '0');
-    final second = entry.date.second.toString().padLeft(2, '0');
+  Future<String> _generateId(DateTime date) async {
+    final year = date.year.toString();
+    final month = date.month.toString().padLeft(2, '0');
+    final day = date.day.toString().padLeft(2, '0');
+    final hour = date.hour.toString().padLeft(2, '0');
+    final minute = date.minute.toString().padLeft(2, '0');
+    final second = date.second.toString().padLeft(2, '0');
     final uid = await nanoid(10);
     return '$year-$month-$day-$hour-$minute-$second-$uid';
   }
