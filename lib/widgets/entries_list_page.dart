@@ -1,6 +1,8 @@
 import 'package:emobook/models/day_entry.dart';
+import 'package:emobook/models/mood.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:emobook/widgets/day_entry_list_item.dart';
+import 'package:emobook/widgets/emo_mood_selector_widget.dart';
 import 'package:emobook/widgets/snapshot_based_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -39,6 +41,11 @@ class _EntriesListPageState extends State<EntriesListPage> {
           for (final entry in data) DayEntryListItem(dayEntry: entry),
         ],
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: EmoMoodSelectorWidget(
+          onTap: _navToNewEntry,
+        ),
+      ),
     );
   }
 
@@ -46,6 +53,10 @@ class _EntriesListPageState extends State<EntriesListPage> {
     setState(() {
       _snapshot = snapshot;
     });
+  }
+
+  void _navToNewEntry({required Mood mood}) {
+
   }
 
   Future<void> _loadData() async {
