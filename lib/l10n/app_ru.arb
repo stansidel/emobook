@@ -18,5 +18,6 @@
   "dayEntryEditPage_list_imageButtons_camera": "Сделать фото",
   "dayEntryEditPage_list_imageButtons_doodle": "Нарисовать",
   "general_error_unexpected": "Непредвиденная ошибка",
-  "emotionsSelectorField_nothingSelected": "Без эмоций"
+  "emotionsSelectorField_nothingSelected": "Без эмоций",
+  "selectEmotionsPage_title": "Эмоции"
 }

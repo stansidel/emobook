@@ -26,5 +26,6 @@
   "dayEntryEditPage_list_imageButtons_camera": "Take photo",
   "dayEntryEditPage_list_imageButtons_doodle": "Draw",
   "general_error_unexpected": "Unexpected error",
-  "emotionsSelectorField_nothingSelected": "Nothing"
+  "emotionsSelectorField_nothingSelected": "Nothing",
+  "selectEmotionsPage_title": "Select emotions"
 }

@@ -3,6 +3,8 @@ import 'package:emobook/widgets/emotion_select_item.dart';
 import 'package:flutter/material.dart';
 import 'package:emobook/extensions/string.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class SelectEmotionsPage extends StatefulWidget {
   static const routeName = '/emotions/select';
 
@@ -33,7 +35,7 @@ class _SelectEmotionsPageState extends State<SelectEmotionsPage> {
       },
       child: Scaffold(
           appBar: AppBar(
-            title: Text('Select Emotions'),
+            title: Text(AppLocalizations.of(context)!.selectEmotionsPage_title),
           ),
           body: _buildBody(context)),
     );
