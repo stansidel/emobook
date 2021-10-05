@@ -46,7 +46,7 @@ dependencies:
 
   permission_handler:
   image_picker:
-#  flutter_svg:
+  flutter_svg:
   nanoid:
   path_provider:
   path:
@@ -95,6 +95,7 @@ flutter:
     - assets/images/mood_neutral_grey.png
     - assets/images/mood_sad_grey.png
     - assets/images/mood_very_sad_grey.png
+    - assets/svg/emo_simple_checkmark.svg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

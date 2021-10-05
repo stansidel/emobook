@@ -2,10 +2,12 @@ import 'dart:developer';
 
 import 'package:emobook/models/day_entry_view_model.dart';
 import 'package:emobook/models/emo_file.dart';
+import 'package:emobook/models/emotion.dart';
 import 'package:emobook/models/mood.dart';
 import 'package:emobook/widgets/emo_image_view.dart';
 import 'package:emobook/widgets/emo_mood_selector_widget.dart';
 import 'package:emobook/widgets/emotions_selector_field.dart';
+import 'package:emobook/widgets/select_emotions_page.dart';
 import 'package:flutter/material.dart';
 import 'package:emobook/repositories/day_entries_repository.dart';
 import 'package:image_picker/image_picker.dart';
@@ -148,7 +150,16 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
     _persistViewModel();
   }
 
-  void _selectEmotions(BuildContext context) {}
+  Future<void> _selectEmotions(BuildContext context) async {
+    var updatedEmotions = await Navigator.pushNamed(
+        context, SelectEmotionsPage.routeName,
+        arguments: viewModel.emotions ?? <Emotion>[]);
+    if (updatedEmotions is! List<Emotion>) {
+      return;
+    }
+    setState(() => viewModel.emotions = updatedEmotions);
+    _persistViewModel();
+  }
 
   void _updateComment() {
     final text = _commentController.text;

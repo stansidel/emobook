@@ -23,10 +23,11 @@ class EmotionsSelectorField extends StatelessWidget {
     this.textStyle,
     this.onTap,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onTap,
+      onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),

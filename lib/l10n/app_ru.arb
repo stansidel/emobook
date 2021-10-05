@@ -7,5 +7,6 @@
   "emoMoodSelectorWidget_moodName_happy": "Хорошо",
   "emoMoodSelectorWidget_moodName_neutral": "Норм",
   "emoMoodSelectorWidget_moodName_sad": "Плохо",
-  "emoMoodSelectorWidget_moodName_verySad": "Ужасно"
+  "emoMoodSelectorWidget_moodName_verySad": "Ужасно",
+  "emotion_name_grateful": "благодарность"
 }

@@ -7,5 +7,6 @@
   "emoMoodSelectorWidget_moodName_happy": "Happy",
   "emoMoodSelectorWidget_moodName_neutral": "Ok",
   "emoMoodSelectorWidget_moodName_sad": "Sad",
-  "emoMoodSelectorWidget_moodName_verySad": "Very sad"
+  "emoMoodSelectorWidget_moodName_verySad": "Very sad",
+  "emotion_name_grateful": "grateful"
 }
