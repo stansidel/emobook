@@ -112,6 +112,9 @@ class _DayEntryEditPageState extends State<DayEntryEditPage> {
         decoration: InputDecoration(
             hintText: AppLocalizations.of(context)!
                 .dayEntryEditPage_list_comment_hintText),
+        textCapitalization: TextCapitalization.sentences,
+        autocorrect: true,
+        maxLines: null,
       ),
       onFocusChange: (gotFocus) {
         if (!gotFocus) {
