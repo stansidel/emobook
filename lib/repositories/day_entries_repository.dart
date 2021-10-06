@@ -44,10 +44,32 @@ class DayEntriesRepository {
   Future<String> updateOrSaveEntry(DayEntry entry) async {
     final effectiveId = entry.id ?? await _generateId(entry.date);
     final dataFilePath = await _fileObjectPathForId(effectiveId);
-    final dataObject = entry.copyWith(id: effectiveId).toJson();
+    final dataObject = _prepareForStorage(entry).copyWith(id: effectiveId).toJson();
     final dataString = jsonEncode(dataObject);
     await File(dataFilePath).writeAsString(dataString);
     return effectiveId;
+  }
+
+  DayEntry _prepareForStorage(DayEntry entry) {
+    final images = entry.images?.map((i) {
+      if (i.storage == EmoFileStorage.localFile) {
+        return EmoFile(path: p.basename(i.path), storage: EmoFileStorage.localFile);
+      }
+      return i;
+    }).toList();
+    return entry.copyWith(images: images);
+  }
+
+  DayEntry _prepareForClient(DayEntry entry, String dirPath) {
+    final images = entry.images?.map((image) {
+      if (image.storage == EmoFileStorage.localFile) {
+        return EmoFile(
+            path: p.join(dirPath, p.basename(image.path)),
+            storage: EmoFileStorage.localFile);
+      }
+      return image;
+    }).toList();
+    return entry.copyWith(images: images);
   }
 
   Future<void> removeEntry(String id) async {
@@ -73,10 +95,10 @@ class DayEntriesRepository {
     targetFile.writeAsBytes(bytes);
 
     var images = entry.images ?? [];
-    images.add(EmoFile(path: targetPath, storage: EmoFileStorage.localFile));
+    images.add(EmoFile(path: p.basename(targetPath), storage: EmoFileStorage.localFile));
     final newEntry = entry.copyWith(images: images);
     await updateOrSaveEntry(newEntry);
-    return newEntry;
+    return _prepareForClient(newEntry, entryDirPath);
   }
 
   Future<DayEntry> addImage({required DayEntry entry, required String imagePath}) async {
@@ -100,10 +122,10 @@ class DayEntriesRepository {
     }
     await sourceFile.copy(targetPath);
     var images = entry.images ?? [];
-    images.add(EmoFile(path: targetPath, storage: EmoFileStorage.localFile));
+    images.add(EmoFile(path: p.basename(targetPath), storage: EmoFileStorage.localFile));
     final newEntry = entry.copyWith(images: images);
     await updateOrSaveEntry(newEntry);
-    return newEntry;
+    return _prepareForClient(newEntry, entryDirPath);
   }
 
   Future<DayEntry> removeImage({required DayEntry entry, required EmoFile image}) async {
@@ -136,11 +158,12 @@ class DayEntriesRepository {
   }
 
   Future<DayEntry> _readEntry(String id) async {
+    final dataDirectory = await _dirPathForId(id);
     final dataFilePath = await _fileObjectPathForId(id);
     final dataString = await File(dataFilePath).readAsString();
     final dataObject = jsonDecode(dataString);
     final entry = DayEntry.fromJson(dataObject);
-    return entry.copyWith(id: id);
+    return _prepareForClient(entry, dataDirectory).copyWith(id: id);
   }
 
   Future<String> _dirPathForId(String id, {bool createDir = true}) async {
