@@ -20,6 +20,8 @@ class _EmoThemeWidget extends InheritedWidget {
 class EmoTheme with _$EmoTheme {
   const factory EmoTheme({
     required Color listHeaderBgColor,
+    required Color searchFieldColor,
+    required Color searchFieldTextColor,
     required Color dismissDeleteBgColor,
     required Color dismissDeleteFgColor,
     required Color primaryColor,
@@ -40,6 +42,8 @@ class EmoTheme with _$EmoTheme {
   factory EmoTheme.fromPrimaryColor({
     required Color primaryColor,
     required Color listHeaderBgColor,
+    required Color searchFieldColor,
+    required Color searchFieldTextColor,
     Color? dismissDeleteBgColor,
     Color? dismissDeleteFgColor,
   }) {
@@ -47,6 +51,8 @@ class EmoTheme with _$EmoTheme {
         ColorScheme.fromSwatch(primarySwatch: primaryColor.materialColor);
     return EmoTheme(
       listHeaderBgColor: listHeaderBgColor,
+      searchFieldColor: searchFieldColor,
+      searchFieldTextColor: searchFieldTextColor,
       dismissDeleteBgColor: dismissDeleteBgColor ?? scheme.error,
       dismissDeleteFgColor: dismissDeleteFgColor ?? scheme.onError,
       primaryColor: primaryColor,
@@ -68,8 +74,11 @@ class EmoTheme with _$EmoTheme {
   const EmoTheme._();
 
   static EmoTheme get defaultTheme => EmoTheme.fromPrimaryColor(
-      primaryColor: Colors.lightBlue,
-      listHeaderBgColor: const Color(0xFFEDECEC));
+        primaryColor: Colors.lightBlue,
+        listHeaderBgColor: const Color(0xFFEDECEC),
+        searchFieldTextColor: const Color(0xFFFFFFFF),
+        searchFieldColor: const Color(0xFF000000),
+      );
 
   Widget widget({required Widget child}) {
     return _EmoThemeWidget(child: child, theme: this);

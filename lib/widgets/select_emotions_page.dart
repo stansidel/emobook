@@ -1,5 +1,6 @@
 import 'package:emobook/models/emotion.dart';
 import 'package:emobook/widgets/emotion_select_item.dart';
+import 'package:emobook/widgets/searchable_async_view.dart';
 import 'package:flutter/material.dart';
 import 'package:emobook/extensions/string.dart';
 
@@ -42,15 +43,31 @@ class _SelectEmotionsPageState extends State<SelectEmotionsPage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return ListView(
-      children: _allEmotions
-          .map((e) => EmotionSelectItem(
-              title: e.localized(context).toUpperCaseFirst(),
-              isSelected: selectedEmotions.contains(e),
-        onTap: () => _triggerEmotion(e),
-      ))
-          .toList(growable: false),
+    return SearchableAsyncView<List<Emotion>>(
+      dataGetter: (useCache) async => _allEmotions,
+      dataFilter: (data, string) => _filterData(context, data, string),
+      builder: (context, data) => ListView(
+        children: data
+            .map((e) => EmotionSelectItem(
+                  title: e.localized(context).toUpperCaseFirst(),
+                  isSelected: selectedEmotions.contains(e),
+                  onTap: () => _triggerEmotion(e),
+                ))
+            .toList(growable: false),
+      ),
     );
+  }
+
+  Future<List<Emotion>> _filterData(BuildContext context,
+      List<Emotion> dataFilter, String searchString) async {
+    final allLocalized = dataFilter.map((e) => e.localized(context));
+    final result = dataFilter
+        .where((e) => e
+            .localized(context)
+            .toLowerCase()
+            .contains(searchString.toLowerCase()))
+        .toList(growable: false);
+    return result;
   }
 
   void _triggerEmotion(Emotion emotion) {
@@ -64,6 +81,4 @@ class _SelectEmotionsPageState extends State<SelectEmotionsPage> {
   }
 }
 
-const _allEmotions = <Emotion>[
-  Emotion.grateful,
-];
+const _allEmotions = Emotion.values;

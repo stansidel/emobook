@@ -39,22 +39,22 @@ class _EntriesListPageState extends State<EntriesListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SnapshotBasedScreen(snapshot: _snapshot, buildChild: _buildList);
-  }
-
-  Widget _buildList(BuildContext context, _PageDataType data) {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.entriesListPage_title),
       ),
-      body: ListView(
-        children: _buildListItems(data).toList(growable: false),
-      ),
+      body: SnapshotBasedScreen(snapshot: _snapshot, buildChild: _buildList),
       bottomNavigationBar: BottomAppBar(
         child: EmoMoodSelectorWidget(
           onTap: _navToNewEntry,
         ),
       ),
+    );
+  }
+
+  Widget _buildList(BuildContext context, _PageDataType data) {
+    return ListView(
+      children: _buildListItems(data).toList(growable: false),
     );
   }
 
@@ -77,8 +77,8 @@ class _EntriesListPageState extends State<EntriesListPage> {
     return Dismissible(
       key: Key(entry.id ?? ''),
       child: DayEntryListItem(
-          dayEntry: entry,
-          onTap: () => _navToEditEntry(entry: entry),
+        dayEntry: entry,
+        onTap: () => _navToEditEntry(entry: entry),
       ),
       onDismissed: (direction) {
         if (direction != DismissDirection.endToStart) {
@@ -106,25 +106,28 @@ class _EntriesListPageState extends State<EntriesListPage> {
     });
   }
 
-  Future<bool> _confirmDismiss(DismissDirection direction, BuildContext context) async {
-    final result = await showDialog(context: context, builder: (context) {
-      return AlertDialog(
-        title: Text(AppLocalizations.of(context)!
-            .entriesListPage_deleteEntry_dialog_title),
-        content: Text(AppLocalizations.of(context)!
-            .entriesListPage_deleteEntry_dialog_content),
-        actions: [
-          TextButton(
-            child: Text(AppLocalizations.of(context)!.general_button_yes),
-            onPressed: () => Navigator.of(context).pop(true),
-          ),
-          TextButton(
-            child: Text(AppLocalizations.of(context)!.general_button_no),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        ],
-      );
-    });
+  Future<bool> _confirmDismiss(
+      DismissDirection direction, BuildContext context) async {
+    final result = await showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(AppLocalizations.of(context)!
+                .entriesListPage_deleteEntry_dialog_title),
+            content: Text(AppLocalizations.of(context)!
+                .entriesListPage_deleteEntry_dialog_content),
+            actions: [
+              TextButton(
+                child: Text(AppLocalizations.of(context)!.general_button_yes),
+                onPressed: () => Navigator.of(context).pop(true),
+              ),
+              TextButton(
+                child: Text(AppLocalizations.of(context)!.general_button_no),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+            ],
+          );
+        });
 
     return result ?? false;
   }
